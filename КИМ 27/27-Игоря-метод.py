@@ -17,6 +17,8 @@ while len(data) != 0: #Пока список значений не равен 0.
         for p2 in sosedi:
             data.remove(p2) #Удаляем найденных соседей из значений
     print('Точек в кластере - ',len(clusters[-1])) #Выводим кол-во точек в сформированном кластере
+        if len(clusters[-1]) < 10: #Условие аномалии или лишних точек. Если кол-во точек в кластере меньше нужного...
+        clusters.remove(clusters[-1]) #Убираем этот кластер из общего списка
 
 def centroid(cl): #Ф-ция, которая принимает на вход кластер и выводит координаты его центроида
     mn = []
@@ -301,7 +303,7 @@ Py = abs(sum(y/len(clusters) for x,y in centroids)) * 10000
 
 print('Ответ B - ', int(Px),int(Py))'''
 
-from math import*
+'''from math import*
 f = open('27-13-A.txt')
 f.readline()
 data = []
@@ -368,5 +370,215 @@ print('Центроиды - ',centroids)
 Px = abs(sum([x/len(clusters) for x,y in centroids]))
 Py = abs(sum([y/len(clusters) for x,y in centroids]))
 Ps = sum([len(cluster)/(4*4) for cluster in clusters])
-print('Ответ B - ',int((Px + Py)*10000),int(Ps*1000))
+print('Ответ B - ',int((Px + Py)*10000),int(Ps*1000))'''
+
+'''from math import*
+f = open('27-14.txt')
+data = []
+for line in f:
+    a = [float(x) for x in line.replace(',','.').split()]
+    data.append(a)
+print('Кол-во точек - ',len(data))
+
+clusters = []
+
+while len(data) != 0:
+    clusters.append([data.pop(0)])
+    for p in clusters[-1]:
+        sosedi = [p1 for p1 in data if dist(p,p1) < 1]
+        clusters[-1].extend(sosedi)
+        for p2 in sosedi:
+            data.remove(p2)
+    print('Точек в кластере - ', len(clusters[-1]))
+    if len(clusters[-1]) < 10:
+        clusters.remove(clusters[-1])
+
+def centroid(cl):
+    mn = []
+    for p in cl:
+        sm = sum([dist(p,p1) for p1 in cl if p != p1])
+        mn.append([sm,p])
+    return min(mn)[-1]
+
+centroins = [centroid(cl) for cl in clusters]
+print('Центроиды - ', centroins)
+
+Px = max([x for x,y in centroins])
+Py = max([y for x,y in centroins])
+
+print(int(abs(Px * 10000)), abs(int(Py * 10000)))'''
+
+'''from math import*
+f = open('27-15.txt')
+data = []
+for line in f:
+    a = [float(x) for x in line.replace(',','.').split()]
+    data.append(a)
+print('Кол-во точек - ',len(data))
+
+clusters = []
+while len(data) != 0:
+    clusters.append([data.pop(0)])
+    for p in clusters[-1]:
+        sosedi = [p1 for p1 in data if dist(p,p1) < 1]
+        clusters[-1].extend(sosedi)
+        for p2 in sosedi:
+            data.remove(p2)
+    print('Точек в кластере - ', len(clusters[-1]))
+    if len(clusters[-1]) < 10:
+        clusters.remove(clusters[-1])
+
+def centroid(cl):
+    mn = []
+    for p in cl:
+        sm = sum([dist(p,p1) for p1 in cl if p1 != p])
+        mn.append([sm,p])
+    return min(mn)[-1]
+
+centroids = [centroid(cl) for cl in clusters]
+print('Центроиды - ',centroids)
+
+Px = sum([x for x,y in centroids])
+Py = sum([y for x,y in centroids])
+
+print('Ответ - ', int(abs(Px*10000)), int(abs(Py*10000)))'''
+
+'''from math import*
+f = open('27-16.txt')
+data = []
+for line in f:
+    a = [float(x) for x in line.replace(',','.').split()]
+    data.append(a)
+print('Кол-во точек - ',len(data))
+
+clusters = []
+while len(data) != 0:
+    clusters.append([data.pop(0)])
+    for p in clusters[-1]:
+        sosedi = [p1 for p1 in data if dist(p1,p) < 3]
+        clusters[-1].extend(sosedi)
+        for p2 in sosedi:
+            data.remove(p2)
+    print('Точек в кластере - ',len(clusters[-1]))
+    if len(clusters[-1]) < 10:
+        clusters.remove(clusters[-1])
+
+def centroid(cl):
+    mn = []
+    for p in cl:
+        sm = sum([dist(p,p1) for p1 in cl if p != p1])
+        mn.append([sm,p])
+    return min(mn)[-1]
+centroids = [centroid(cl) for cl in clusters]
+print('Кол-во центроидов - ',centroids)
+
+Px = abs(centroids[0][0]-centroids[1][0])
+Py = abs(centroids[0][1]-centroids[1][1])
+
+print('Ответ - ',int(Px*10000),int(Py*10000))'''
+
+'''from math import*
+f = open('27-17.txt')
+data = []
+for line in f:
+    a = [float(x) for x in line.replace(',','.').split()]
+    data.append(a)
+print('Кол-во точек - ',len(data))
+
+clusters = []
+while len(data) != 0:
+    clusters.append([data.pop(0)])
+    for p in clusters[-1]:
+        sosedi = [p1 for p1 in data if dist(p,p1) < 1]
+        clusters[-1].extend(sosedi)
+        for p2 in sosedi:
+            data.remove(p2)
+    print('Точек в кластере - ',len(clusters[-1]))
+    if len(clusters[-1]) < 10:
+        clusters.remove(clusters[-1])
+
+def centroid(cl):
+    mn = []
+    for p in cl:
+        sm = sum([dist(p,p1) for p1 in cl if p != p1])
+        mn.append([sm,p])
+    return min(mn)[-1]
+centroids = [centroid(cl) for cl in clusters]
+print('Центроиды - ',centroids)
+
+Q1 = len(min(clusters, key = len))
+Q2 = len(max(clusters, key = len))
+
+print('Ответ - ',Q1,Q2)'''
+
+'''from math import*
+f = open('27-18-A.txt')
+f.readline()
+data = []
+for line in f:
+    a = [float(x) for x in line.replace(',','.').split()]
+    data.append(a)
+print('Кол-во точек - ',len(data))
+
+clusters = []
+while len(data) != 0:
+    clusters.append([data.pop(0)])
+    for p in clusters[-1]:
+        sosedi = [p1 for p1 in data if dist(p,p1) < 1]
+        clusters[-1].extend(sosedi)
+        for p2 in sosedi:
+            data.remove(p2)
+    print('Точек в кластере - ',len(clusters[-1]))
+    if len(clusters[-1]) < 10:
+        clusters.remove(clusters[-1])
+
+def centroid(cl):
+    mn = []
+    for p in cl:
+        sm = sum([dist(p,p1) for p1 in cl if p != p1])
+        mn.append([sm,p])
+    return min(mn)[-1]
+centroids = [centroid(cl) for cl in clusters]
+print('Центроиды - ',centroids)
+
+Px = sum(x/len(clusters) for x,y in centroids)
+Py = sum(y/len(clusters) for x,y in centroids)
+
+print('Ответ A - ',int(abs(Px*10000)),int(abs(Py*10000)))
+
+from math import*
+f = open('27-18-B.txt')
+f.readline()
+data = []
+for line in f:
+    a = [float(x) for x in line.replace(',','.').split()]
+    data.append(a)
+print('Кол-во точек - ',len(data))
+
+clusters = []
+while len(data) != 0:
+    clusters.append([data.pop(0)])
+    for p in clusters[-1]:
+        sosedi = [p1 for p1 in data if dist(p,p1) < 1]
+        clusters[-1].extend(sosedi)
+        for p2 in sosedi:
+            data.remove(p2)
+    print('Точек в кластере - ',len(clusters[-1]))
+    if len(clusters[-1]) < 10:
+        clusters.remove(clusters[-1])
+
+def centroid(cl):
+    mn = []
+    for p in cl:
+        sm = sum([dist(p,p1) for p1 in cl if p != p1])
+        mn.append([sm,p])
+    return min(mn)[-1]
+centroids = [centroid(cl) for cl in clusters]
+print('Центроиды - ',centroids)
+
+Px = sum(x/len(clusters) for x,y in centroids)
+Py = sum(y/len(clusters) for x,y in centroids)
+
+print('Ответ B - ',int(abs(Px*10000)),int(abs(Py*10000)))'''
+
 

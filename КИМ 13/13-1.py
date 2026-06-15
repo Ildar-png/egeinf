@@ -125,3 +125,11 @@ net = ip_network('68.203.243.87/255.255.224.0',0)
 for ip in net.hosts():
     print(ip)'''
 
+'''from ipaddress import*
+for A in range(0,256):
+    net = ip_network(f'32.0.{A}.5/255.255.240.0',0)
+    for ip in net:
+        if (f'{ip:b}'[:16].count('1') <= f'{ip:b}'[16:].count('1')) == False:
+            break
+    else:
+        print(A)'''
